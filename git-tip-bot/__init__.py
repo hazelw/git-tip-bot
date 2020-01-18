@@ -14,22 +14,25 @@ def start():
         tips_reader = csv.reader(tips_file, delimiter='|')
         tips = [tip for (tip,) in tips_reader]
 
-    tip = random.choice(tips)
-
     while True:
         cursor = ''
-        response = client.users_list(cursor=cursor).data
-        members = response['members']
-        user_ids = [member['id'] for member in members]
+        conversations = client.conversations_list(
+            types='im', cursor=cursor
+        ).data
 
-        for user_id in user_ids:
-             client.chat_postMessage(
-                channel=user_id,
+        channel_ids = [
+            channel['id'] for channel in conversations['channels']
+        ]
+
+        for channel_id in channel_ids:
+            tip = random.choice(tips)
+            client.chat_postMessage(
+                channel=channel_id,
                 text=tip
             )
 
-        cursor = response['response_metadata']['next_cursor']
-
+        cursor = conversations['response_metadata']['next_cursor']
+        
         if not cursor:
             break
 
