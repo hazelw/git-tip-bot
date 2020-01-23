@@ -1,3 +1,6 @@
+You can create a global .gitignore file by creating a .gitignore list as usual then setting it to core.excludesfile in your git config using `git config --global core.excludesfile <wherever your global gitignore is>. This global gitignore file will run on every repo you have locally.
+`git push --force-with-lease` behaves as `git push --force`, but will refuse to push over the upstream branch if there is an unexpected commit on the upstream branch (such as when someone else has merged in their branch). This works by checking the value of the upstream ref.
+`git sparse-checkout` will tell git that it should only interact with a particular subset of the repo, for example - if we only want `git pull` to pull a certain set of directories (more info: https://github.blog/2020-01-17-bring-your-monorepo-down-to-size-with-sparse-checkout/).
 here is a tip, it has a comma
 here is another tip
 one more
